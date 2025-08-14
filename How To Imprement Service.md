@@ -29,7 +29,7 @@ Request อื่นจะได้ instance ใหม่
 
 ใช้ได้ปลอดภัยกับ multi-thread ถ้าไม่มี shared state
 
-## การทำงานแบบ Statefull หรือ Stateless 
+## การทำงานแบบ Stateful หรือ Stateless 
 
 ### Stateless
 ไม่มีข้อมูลในตัวเอง, ทำงานเหมือนกันทุกครั้งที่เรียก
