@@ -65,3 +65,67 @@ public class StatefulCounter : ICounter
     public int Increment() => ++_count;
 }
 ```
+
+Thread Safety + ข้อไม่ควรทำใน Service
+
+
+---
+
+1. Singleton
+
+Stateless → ปลอดภัย
+
+Stateful → ต้อง lock หรือทำ immutable
+
+❌ ไม่ควรทำ
+
+ห้ามแชร์ DbContext เพราะไม่ thread-safe และมี lifetime ควรเป็น Scoped
+
+ห้ามเก็บ HttpContext หรือข้อมูล request ใดๆ เพราะจะรั่วข้าม request
+
+ห้ามเก็บ connection เปิดค้างถ้าไม่จัดการปิดเอง
+
+
+
+
+---
+
+2. Scoped
+
+Stateful → ปลอดภัยในขอบเขต request เดียว
+
+Stateless → ใช้ได้
+
+❌ ไม่ควรทำ
+
+ห้ามเก็บ Scoped service ภายใน Singleton เพราะจะกลายเป็นการแชร์ object ของ request เดียวไปยัง request อื่น
+
+ห้ามใช้ข้าม thread โดยไม่มีการ sync เพราะ async/parallel ใน request เดียวก็เจอ race condition ได้
+
+
+
+
+---
+
+3. Transient
+
+Stateless / Stateful → ปลอดภัย เพราะสร้างใหม่ทุกครั้ง
+
+❌ ไม่ควรทำ
+
+หลีกเลี่ยงสร้าง object ที่หนักมาก เช่น HttpClient ในทุกครั้ง ควรใช้ Singleton + Factory/Pool แทน
+
+อย่าใช้กับ resource ที่ต้อง reuse เพราะสิ้นเปลือง
+
+
+
+
+---
+
+ถ้าต้องสรุปเป็นสูตรจำง่าย:
+
+Singleton → stateless, ห้ามมี request-specific data
+
+Scoped → เก็บข้อมูลของ request ได้, ห้ามเก็บใน Singleton
+
+Transient → ใช้กับของเบา, ไม่มีการแชร์ state
