@@ -2,6 +2,6 @@
 
 public interface IJwtService
 {
-    string SignToken(SignTokenModel signTokenModel);
+    string SignToken(SignData signTokenModel);
     //string RefreshToken(IDictionary<string, string> claimsKeyValue);
 }

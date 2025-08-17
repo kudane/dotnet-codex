@@ -1,6 +1,6 @@
 ﻿namespace Kudane.Jwt.Models;
 
-public sealed class SignData
+public record SignData
 {
     public IDictionary<string, string> ClaimsKeyValue { get; init; }
     public string SecretKey { get; init; }
@@ -23,9 +23,9 @@ public sealed class SignData
             throw new ArgumentNullException(nameof(secretKey));
         }
 
-        if (expiresInMinutes == 0)
+        if (expiresInMinutes <= 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(expiresInMinutes), "expiresInMinutes cannot be zero.");
+            throw new ArgumentOutOfRangeException(nameof(expiresInMinutes), "expiresInMinutes cannot be zero or negative.");
         }
 
         ClaimsKeyValue = claimsKeyValues;
