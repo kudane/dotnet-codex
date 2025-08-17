@@ -1,4 +1,4 @@
-﻿การใช้งาน Kudane.Jwt ในโปรเจกต์ C# ของคุณ
+﻿การใช้งาน
 
 ```c#
 var services = new ServiceCollection();
