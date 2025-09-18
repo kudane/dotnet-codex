@@ -23,7 +23,7 @@ namespace GenericRepositoryAndService.Infrastructure.Repositories
 
         public async Task<TEntity> CreateAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
-            ArgumentNullException.ThrowIfNull(entity);
+            Guard.AgainstNull(entity, nameof(entity));
 
             await _dbSet.AddAsync(entity, cancellationToken);
 
@@ -32,7 +32,7 @@ namespace GenericRepositoryAndService.Infrastructure.Repositories
 
         public async Task<TEntity?> UpdateAsync(PrimaryKey key, TEntity entity, CancellationToken cancellationToken = default)
         {
-            ArgumentNullException.ThrowIfNull(entity);
+            Guard.AgainstNull(entity, nameof(entity));
 
             _dbSet.Update(entity);
 
@@ -43,7 +43,7 @@ namespace GenericRepositoryAndService.Infrastructure.Repositories
         {
             var entity = await GetAsync(key, cancellationToken);
 
-            ArgumentNullException.ThrowIfNull(entity);
+            Guard.AgainstNull(entity, nameof(entity));
 
             _dbSet.Remove(entity);
 
@@ -130,3 +130,4 @@ namespace GenericRepositoryAndService.Infrastructure.Repositories
         }
     }
 }
+
