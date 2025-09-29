@@ -1,0 +1,6 @@
+@WebAutoRegisterDi_HostAddress = http://localhost:5071
+
+GET {{WebAutoRegisterDi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
